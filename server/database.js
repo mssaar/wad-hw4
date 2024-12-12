@@ -3,7 +3,7 @@ const Pool = require('pg').Pool;
 // this code will work and a table will be created if you have already created the "testWad" database.
 const pool = new Pool({
     user: "postgres",
-    password: "muskelmees", // Enter your password here
+    password: "1234", // Enter your password here
     database: "testWad", // Try to use the same name for your database
     host: "localhost",
     port: "5433"
@@ -32,11 +32,6 @@ const createTblQuery1 = `
 	    "body" VARCHAR(200) NOT NULL,
         "urllink" VARCHAR(200)  
     );`;
-
-const mdealol = `
-    INSERT INTO "posttable" ("id", "title", "body", "urllink") 
-    VALUES (1, 'test', 'Testest', 'laosldoasld') 
-    ON CONFLICT ("id") DO NOTHING;`; // Prevent duplicate insertion if "id" already exists
 
 const createTblQuery2 = `
     CREATE TABLE IF NOT EXISTS "users" (

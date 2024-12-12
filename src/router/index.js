@@ -4,44 +4,45 @@ import APost from "../views/APost.vue";
 import AddPost from "../views/AddPost.vue";
 import SignUp from "../views/SignUp.vue";
 import LogIn from "../views/LogIn.vue";
+import auth from '@/auth';
 
 
 
 const routes = [{
-        path: '/',
-        name: 'AllPosts',
-        component: () =>
-            import ("../views/AllPosts.vue")
-    },
-    {
-        path: "/api/allposts",
+        path: "/",
         name: "AllPosts",
         component: AllPosts,
+        beforeEnter: async(to, from, next) => {
+            let authResult = await auth.authenticated();
+            if (!authResult) {
+                console.log('access not granted');
+                next('/login')
+            } else {
+                console.log('access granted');
+                next();
+            }
+        }
+        
     },
     {
-        path: "/api/apost/:id",
+        path: "/apost/:id",
         name: "APost",
         component: APost,
     },
     {
-        path: "/api/addpost",
+        path: "/addpost",
         name: "AddPost",
         component: AddPost,
     },
     {
-        path: "/api/signup",
+        path: "/signup",
         name: "SignUp",
         component: SignUp,
     },
     {
-        path: "/api/login",
+        path: "/login",
         name: "LogIn",
         component: LogIn,
-    },
-    { //will route to AllPosts view if none of the previous routes apply
-        path: "/:catchAll(.*)",
-        name: "AllPosts",
-        component: AllPosts,
     }
 ]
 

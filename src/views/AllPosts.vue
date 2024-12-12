@@ -20,11 +20,14 @@
 
 
 <script>
+import auth from '@/auth';
+
 export default {
   name: "AllPosts",
   data() {
     return {
       posts: [],
+      authResult: auth.authenticated()
     };
   },
   methods: {
