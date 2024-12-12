@@ -9,13 +9,11 @@ const pool = new Pool({
     port: "5433"
 });
 
-const execute = async(query1, mdealol, query2) => {
+const execute = async(query1, query2) => {
     try {
         await pool.connect(); // gets connection
         await pool.query(query1); // sends first query to create the first table
         console.log("First table created");
-        await pool.query(mdealol); // inserts initial post into "posttable"
-        console.log("Data inserted into 'posttable'");
         await pool.query(query2); // sends second query to create the second table
         console.log("Second table created");
         return true;
@@ -41,7 +39,7 @@ const createTblQuery2 = `
     );`;
 
 // A function to execute the previous queries   
-execute(createTblQuery1, mdealol, createTblQuery2).then(result => {
+execute(createTblQuery1, createTblQuery2).then(result => {
     if (result) {
         console.log('If they do not exist, the tables "users" and "posttable" have been created, and data has been added to "posttable".');
     }

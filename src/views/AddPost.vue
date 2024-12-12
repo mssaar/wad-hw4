@@ -39,7 +39,7 @@ export default {
       })
       .then((response) => {
         console.log(response.data);
-        this.$router.push("/api/allposts");
+        this.$router.push("/allposts");
       })
       .catch((e) => {
         console.log(e);
