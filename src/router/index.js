@@ -12,6 +12,8 @@ const routes = [{
         path: "/",
         name: "AllPosts",
         component: AllPosts,
+        // checks if user is autheticated
+        // otherwise redirects to login
         beforeEnter: async(to, from, next) => {
             let authResult = await auth.authenticated();
             if (!authResult) {
@@ -25,14 +27,34 @@ const routes = [{
         
     },
     {
-        path: "/apost/:id",
+        path: '/api/posts/:id',
         name: "APost",
         component: APost,
+        beforeEnter: async(to, from, next) => {
+            let authResult = await auth.authenticated();
+            if (!authResult) {
+                console.log('access not granted');
+                next('/login')
+            } else {
+                console.log('access granted');
+                next();
+            }
+        }
     },
     {
         path: "/addpost",
         name: "AddPost",
         component: AddPost,
+        beforeEnter: async(to, from, next) => {
+            let authResult = await auth.authenticated();
+            if (!authResult) {
+                console.log('access not granted');
+                next('/login')
+            } else {
+                console.log('access granted');
+                next();
+            }
+        }
     },
     {
         path: "/signup",
@@ -43,7 +65,12 @@ const routes = [{
         path: "/login",
         name: "LogIn",
         component: LogIn,
-    }
+    },
+    // {
+    //     path: "/contacts",
+    //     name: "Contacts",
+    //     component: Contacts,
+    // }
 ]
 
 const router = createRouter({

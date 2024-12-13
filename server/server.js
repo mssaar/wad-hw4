@@ -20,20 +20,25 @@ const generateJWT = (id) => {
     return jwt.sign({ id }, secret, { expiresIn: maxAge })
 }
 
-app.post('/posts', async(req, res) => {
+// add a post
+app.post('/api/posts', async(req, res) => {
     try {
         console.log("a post request has arrived");
         const post = req.body;
         const newpost = await pool.query(
-            "INSERT INTO posttable(title, body, urllink) values ($1, $2, $3)    RETURNING*", [post.title, post.body, post.urllink]
+            "INSERT INTO posttable(body) values ($1)    RETURNING*", [post.body]
         );
-        res.json(newpost);
+        // res.json(newpost);
+        res.json(newpost.rows[0]); // Standardize to return the row
     } catch (err) {
         console.error(err.message);
+        res.status(500).json({ error: err.message });
+
     }
 });
 
-app.get('/posts', async(req, res) => {
+// view posts
+app.get('/api/posts', async(req, res) => {
     try {
         console.log("get posts request has arrived");
         const posts = await pool.query(
@@ -45,7 +50,9 @@ app.get('/posts', async(req, res) => {
     }
 });
 
-app.get('/posts/:id', async(req, res) => {
+// view a post
+app.get('/api/posts/:id', async(req, res) => {
+    console.log("Received request for post ID:", req.params.id);
     try {
         console.log("get a post with route parameter  request has arrived");
         const { id } = req.params;
@@ -55,24 +62,27 @@ app.get('/posts/:id', async(req, res) => {
         res.json(posts.rows[0]);
     } catch (err) {
         console.error(err.message);
+        // res.status(500).json({ error: "Server error" });
     }
 });
 
-app.put('/posts/:id', async(req, res) => {
+app.put('/api/posts/:id', async(req, res) => {
     try {
         const { id } = req.params;
         const post = req.body;
         console.log("update request has arrived");
         const updatepost = await pool.query(
-            "UPDATE posttable SET (title, body, urllink) = ($2, $3, $4) WHERE id = $1 RETURNING*", [id, post.title, post.body, post.urllink]
+            "UPDATE posttable SET body = $2 WHERE id = $1 RETURNING*", [id, post.body]
         );
-        res.json(updatepost);
+        // res.json(updatepost);
+        res.json(updatepost.rows[0]);
     } catch (err) {
         console.error(err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
-app.delete('/posts/:id', async(req, res) => {
+app.delete('/api/posts/:id', async(req, res) => {
     try {
         const { id } = req.params;
         console.log("delete a post request has arrived");
@@ -143,7 +153,7 @@ app.post('/auth/login', async(req, res) => {
 
 app.get('/auth/logout', (req, res) => {
     console.log('delete jwt request arrived');
-    res.status(202).clearCookie('jwt').json({ "Msg": "cookie cleared" }).send
+    res.status(202).clearCookie('jwt').json({ "msg": "cookie cleared" }).send;
 });
 
 app.listen(port, () => {
@@ -151,7 +161,7 @@ app.listen(port, () => {
 });
 
 
-/*
+
 // is used to check whether a user is authinticated
 app.get('/auth/authenticate', async(req, res) => {
     console.log('authentication request has been arrived');
@@ -181,4 +191,3 @@ app.get('/auth/authenticate', async(req, res) => {
         res.status(400).send(err.message);
     }
 });
-*/

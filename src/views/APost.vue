@@ -2,12 +2,8 @@
   <div class="A Post">
     <div id="form">
       <h3>A Post</h3>
-      <label for="title">Title: </label>
-      <input name="type" type="text" id="title" required v-model="post.title" />
       <label for="body">Body: </label>
       <input name="body" type="text" id="body" required v-model="post.body" />
-      <label for="url">Url: </label>
-      <input name="url" type="text" id="url" required v-model="post.urllink" />
     </div>
     <div class="container">
       <button @click="updatePost" class="updatePost">Update Post</button>
@@ -23,19 +19,23 @@ export default {
   data() {
     return {
       post: {
-        id: "",
-        title: "",
-        body: "",
-        urllink: "",
-      },
+          id: "",
+          body: "hmmm"
+        },
     };
   },
   methods: {
     fetchAPost(id) {
       fetch(`http://localhost:3000/api/posts/${id}`)
-        .then((response) => response.json())
-        .then((data) => (this.post = data))
-        .catch((err) => console.log(err.message));
+        .then((response) => {
+          console.log("Fetch response:", response);
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Post data fetched:", data);
+          this.post = data;
+        })
+        .catch((err) => console.log("Fetch error:", err.message));
     },
     updatePost() {
       fetch(`http://localhost:3000/api/posts/${this.post.id}`, {
@@ -47,7 +47,7 @@ export default {
       })
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/api/allposts");
+          this.$router.push("/");
         })
         .catch((e) => {
           console.log(e);
@@ -60,7 +60,7 @@ export default {
       })
         .then((response) => {
           console.log(response.data);
-          this.$router.push("/api/allposts");
+          this.$router.push("/");
         })
         .catch((e) => {
           console.log(e);

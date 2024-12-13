@@ -6,7 +6,7 @@ const pool = new Pool({
     password: "1234", // Enter your password here
     database: "testWad", // Try to use the same name for your database
     host: "localhost",
-    port: "5433"
+    port: "5432" // change to your database port, default: 5432 (previously was 5433)
 });
 
 const execute = async(query1, query2) => {
@@ -26,16 +26,14 @@ const execute = async(query1, query2) => {
 const createTblQuery1 = `
     CREATE TABLE IF NOT EXISTS "posttable" (
 	    "id" SERIAL PRIMARY KEY,         
-	    "title" VARCHAR(200) NOT NULL,
-	    "body" VARCHAR(200) NOT NULL,
-        "urllink" VARCHAR(200)  
+	    "body" VARCHAR(200) NOT NULL
     );`;
 
 const createTblQuery2 = `
     CREATE TABLE IF NOT EXISTS "users" (
-        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-        email VARCHAR(200) NOT NULL UNIQUE,
-        password VARCHAR(200) NOT NULL 
+        "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        "email" VARCHAR(200) NOT NULL UNIQUE,
+        "password" VARCHAR(200) NOT NULL 
     );`;
 
 // A function to execute the previous queries   

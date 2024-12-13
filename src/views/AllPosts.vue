@@ -3,14 +3,13 @@
     <div id="post-list">
     <h1>All Posts</h1>
      <div class="container">
-    <button   @click="Logout" class="center">Logout</button>
+    <button   @click="logOut" class="center">Logout</button>
+    <button   @click="deleteAll" class="center">Delete all</button>
     </div>
       <ul>
         <div class="item" v-for="post in posts" :key="post.id">
-            <a class= 'singlepost' :href="'/api/apost/' + post.id">
-            <span class="title"> <b>Title:</b> {{ post.title }}  </span><br />
+            <a class= 'singlepost' :href="'/api/posts/' + post.id">
             <span class="body"> <b>Body:</b> {{ post.body }} </span> <br />
-            <span class="url"> <b>Url:</b> {{ post.urllink }} </span> <br />
           </a>
         </div>
       </ul>
@@ -37,6 +36,23 @@ export default {
         .then((data) => (this.posts = data))
         .catch((err) => console.log(err.message));
     },
+    logOut() {
+      fetch(`http://localhost:3000/auth/logout`, {
+        method: "GET",
+        credentials: 'include'
+      })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data.msg);
+        this.$router.push("/login");
+      })
+      .catch((err) => {
+        console.error("error on logout", err);
+      });
+    },
+    deleteAll() {
+      // TODO
+    }
   },
   mounted() {
     this.fetchPosts();
