@@ -2,10 +2,11 @@
   <div>
 
     <nav>
-      <router-link to="/">Posts</router-link> |
-      <router-link to="/addpost">Add a Post</router-link> |
-      <router-link to="/signup">SignUp</router-link>|
-      <router-link to="/login">Login</router-link>
+      <!-- <router-link to="/">Posts</router-link> | -->
+      <!-- <router-link to="/addpost">Add a Post</router-link> | -->
+      <!-- <router-link to="/signup">SignUp</router-link>| -->
+      <router-link to="/login">Home</router-link>
+      <router-link to="/contacts">Contacts</router-link>
     </nav>
     <router-view />
   
@@ -49,6 +50,8 @@ export default {
 
 nav {
   padding: 30px;
+  display: flex; /* Flexbox > align links horizontally */
+  gap: 20px; /* space between links */
 }
 
 nav a {

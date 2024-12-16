@@ -35,6 +35,12 @@ validatePassword(value) {
       }
     },
 SignUp() {
+      if (!this.email || !this.password) {
+        console.log("Email and password cannot be empty.");
+        this.errMsg = "Email and password cannot be empty."
+        return; // Stop the function if validation fails
+      }
+
       var data = {
         email: this.email,
         password: this.password

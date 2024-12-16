@@ -5,6 +5,7 @@ import AddPost from "../views/AddPost.vue";
 import SignUp from "../views/SignUp.vue";
 import LogIn from "../views/LogIn.vue";
 import auth from '@/auth';
+import Contacts from '@/views/Contacts.vue';
 
 
 
@@ -25,6 +26,11 @@ const routes = [{
             }
         }
         
+    },
+    {
+        path: "/contacts",
+        name: "Contacts",
+        component: Contacts,
     },
     {
         path: '/api/posts/:id',

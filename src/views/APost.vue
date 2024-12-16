@@ -2,7 +2,7 @@
   <div class="A Post">
     <div id="form">
       <h3>A Post</h3>
-      <label for="body">Body: </label>
+      <label for="body"></label>
       <input name="body" type="text" id="body" required v-model="post.body" />
     </div>
     <div class="container">

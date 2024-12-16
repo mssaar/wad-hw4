@@ -1,20 +1,25 @@
 <template>
-  <div class="AllPosts">
+<div class="AllPosts">
+    <div class="button"> 
+      <button   @click="logOut" class="center">Logout</button>
+    </div>
     <div id="post-list">
-    <h1>All Posts</h1>
-     <div class="container">
-    <button   @click="logOut" class="center">Logout</button>
-    <button   @click="deleteAll" class="center">Delete all</button>
-    </div>
-      <ul>
-        <div class="item" v-for="post in posts" :key="post.id">
-            <a class= 'singlepost' :href="'/api/posts/' + post.id">
-            <span class="body"> <b>Body:</b> {{ post.body }} </span> <br />
-          </a>
-        </div>
-      </ul>
-    </div>
+      <h1>All Posts</h1>
+      <div class="container">
+      </div>
+          <ul>
+            <div class="item" v-for="post in posts" :key="post.id">
+              <a class= 'singlepost' :href="'/api/posts/' + post.id">
+                <span class="body"> <b></b> {{ post.body }} </span> <br />
+              </a>
+            </div>
+          </ul>
   </div>
+    <div class="button">
+      <button   @click="deleteAll" class="center">Delete all</button>
+      <button   @click="addPostMethod" class="center">Add a post</button>
+    </div>
+</div>
 </template>
 
 
@@ -52,6 +57,9 @@ export default {
     },
     deleteAll() {
       // TODO
+    },
+    addPostMethod(){
+      this.$router.push("/addpost")
     }
   },
   mounted() {
@@ -95,5 +103,12 @@ a:hover {
   margin-top: 10px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.7);
+}
+
+.button {
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Centers items horizontally */
+  margin: 9px;
+  gap: 5px;
 }
 </style>

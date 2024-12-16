@@ -1,7 +1,7 @@
 <template>
   <div class="form">
     <h3>Add a Post</h3>
-    <label for="body">Body: </label>
+    <label for="body"></label>
     <input name="body" type="text" id="body" required v-model="post.body" />
     <button @click="addPost" class="addPost">Add Post</button>
   </div>

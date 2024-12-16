@@ -6,7 +6,7 @@ const pool = new Pool({
     password: "1234", // Enter your password here
     database: "testWad", // Try to use the same name for your database
     host: "localhost",
-    port: "5432" // change to your database port, default: 5432 (previously was 5433)
+    port: "5433" // change to your database port, default: 5432 (previously was 5433)
 });
 
 const execute = async(query1, query2) => {
