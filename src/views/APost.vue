@@ -4,11 +4,11 @@
       <h3>A Post</h3>
       <label for="body"></label>
       <input name="body" type="text" id="body" required v-model="post.body" />
-      <input name="date" type="text" id="date" required v-model="post.date" />
-    </div>
-    <div class="container">
-      <!-- <button @click="updatePost" class="updatePost">Update Post</button> -->
-      <!-- <button @click="deletePost" class="deletePost">Delete Post</button> -->
+      <!-- <input name="date" type="text" id="date" required v-model="post.date" /> -->
+      <div class="container">
+        <button @click="updatePost" class="updatePost">Update Post</button>
+        <button @click="deletePost" class="deletePost">Delete Post</button>
+      </div>
     </div>
   </div>
 </template>
@@ -21,13 +21,58 @@ export default {
     return {
       post: {
           id: "",
-          body: "hmmm",
+          body: "",
           date: ""
         },
     };
-  }
-}
-  
+  },
+  methods: {
+    fetchAPost(id) {
+      fetch(`http://localhost:3000/api/posts/${id}`)
+        .then((response) => {
+          console.log("Fetch response:", response);
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Post data fetched:", data);
+          this.post = data;
+        })
+        .catch((err) => console.log("Fetch error:", err.message));
+    },
+    updatePost() {
+      fetch(`http://localhost:3000/api/posts/${this.post.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.post),
+      })
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push("/");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    deletePost() {
+      fetch(`http://localhost:3000/api/posts/${this.post.id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          console.log(response.data);
+          this.$router.push("/");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+  mounted() {
+    this.fetchAPost(this.$route.params.id);
+  },
+};
 </script>
 
 <style scoped>
