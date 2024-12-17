@@ -1,10 +1,11 @@
 <template>
   <div class="form">
     <h3>Add a Post</h3>
-    <label for="body"></label>
-    <input name="body" type="text" id="body" required v-model="post.body" />
+    <label for="body">Body </label>
+    <input name="body" type="text" id="body" placeholder="body" required v-model="post.body" />
     <label for="date"></label>
     <!-- <input name="date" type="text" id="date" required v-model="post.date" /> -->
+    <div v-if="errMes">{{errMes}} </div>
     <button @click="addPost" class="addPost">Add Post</button>
   </div>
 </template>
@@ -22,6 +23,11 @@ export default {
   },
   methods: {
     addPost() {
+      if (this.body == "") {
+        console.log("Body cannot be empty.");
+        this.errMes = "Body cannot be empty."
+        return; // Stop the function if validation fails
+      }
       var data = {
         body: this.post.body,
         date: this.post.date
