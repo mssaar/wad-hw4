@@ -7,8 +7,8 @@
       <input name="date" type="text" id="date" required v-model="post.date" />
     </div>
     <div class="container">
-      <!-- <button @click="updatePost" class="updatePost">Update Post</button> -->
-      <!-- <button @click="deletePost" class="deletePost">Delete Post</button> -->
+      <button @click="updatePost" class="updatePost">Update Post</button>
+      <button @click="deletePost" class="deletePost">Delete Post</button>
     </div>
   </div>
 </template>

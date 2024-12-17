@@ -58,20 +58,26 @@ export default {
     },
 
     deleteAll() {
-      var id = 1
-      fetch(`http://localhost:3000/api/posts/${id}`, { // ${this.post.id}
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => {
-          console.log(response.data);
-          //this.$router.push("/api/allposts");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-  
-    },
+  fetch("http://localhost:3000/api/posts", {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP Error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Success:", data.message);
+      this.posts = []; // Clear posts from frontend view
+      console.log("All posts deleted successfully");
+    })
+    .catch((error) => {
+      console.error("Failed to delete posts:", error.message);
+    });
+},
+
     goToAddPost(){
       this.$router.push("/addpost")
     }
