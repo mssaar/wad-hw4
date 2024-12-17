@@ -10,6 +10,7 @@
           <ul>
             <div class="item" v-for="post in posts" :key="post.id">
               <a class= 'singlepost' :href="'/api/posts/' + post.id">
+                <span class="date"> <b></b> {{ post.date }} </span> <br />
                 <span class="body"> <b></b> {{ post.body }} </span> <br />
               </a>
             </div>
@@ -17,7 +18,7 @@
   </div>
     <div class="button">
       <button   @click="deleteAll" class="center">Delete all</button>
-      <button   @click="addPostMethod" class="center">Add a post</button>
+      <button   @click="goToAddPost" class="center">Add a post</button>
     </div>
 </div>
 </template>
@@ -55,10 +56,23 @@ export default {
         console.error("error on logout", err);
       });
     },
+
     deleteAll() {
-      // TODO
+      var id = 1
+      fetch(`http://localhost:3000/api/posts/${id}`, { // ${this.post.id}
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          console.log(response.data);
+          //this.$router.push("/api/allposts");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+  
     },
-    addPostMethod(){
+    goToAddPost(){
       this.$router.push("/addpost")
     }
   },
@@ -110,5 +124,12 @@ a:hover {
   justify-content: center; /* Centers items horizontally */
   margin: 9px;
   gap: 5px;
+}
+
+.date{
+  display: flex; /* Use flexbox */
+  justify-content: right; /* puts items to right */
+  font-size: 12px;
+  color: #000;
 }
 </style>

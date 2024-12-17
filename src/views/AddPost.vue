@@ -3,6 +3,8 @@
     <h3>Add a Post</h3>
     <label for="body"></label>
     <input name="body" type="text" id="body" required v-model="post.body" />
+    <label for="date"></label>
+    <!-- <input name="date" type="text" id="date" required v-model="post.date" /> -->
     <button @click="addPost" class="addPost">Add Post</button>
   </div>
 </template>
@@ -14,6 +16,7 @@ export default {
     return {
       post: {
         body: "",
+        date: this.getCurrentDateTime()
       },
     };
   },
@@ -21,6 +24,7 @@ export default {
     addPost() {
       var data = {
         body: this.post.body,
+        date: this.post.date
       };
       fetch("http://localhost:3000/api/posts", {
         method: "POST",
@@ -36,6 +40,17 @@ export default {
       .catch((e) => {
         console.log(e);
       });
+    },
+        // Method to get the current date in "YYYY-MM-DD" format and also Time
+    getCurrentDateTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0"); // Add leading zero
+      const day = String(now.getDate()).padStart(2, "0"); // Add leading zero
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      const seconds = String(now.getSeconds()).padStart(2, "0");
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     },
   },
 };
