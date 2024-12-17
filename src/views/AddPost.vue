@@ -16,18 +16,19 @@ export default {
   data() {
     return {
       post: {
-        body: "",
+        body: '',
         date: this.getCurrentDateTime()
       },
+      errMes: '',
     };
   },
   methods: {
     addPost() {
-      if (this.body == "") {
+      /*if (!this.body) {
         console.log("Body cannot be empty.");
         this.errMes = "Body cannot be empty."
         return; // Stop the function if validation fails
-      }
+      }*/
       var data = {
         body: this.post.body,
         date: this.post.date
