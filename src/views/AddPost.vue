@@ -4,7 +4,7 @@
     <label for="body">Body </label>
     <input name="body" type="text" id="body" placeholder="body" required v-model="post.body" />
     <label for="date"></label>
-    <input name="date" type="text" id="date" required v-model="post.date" />
+    <!-- <input name="date" type="text" id="date" required v-model="post.date" /> -->
     <div v-if="errMes">{{errMes}} </div>
     <button @click="addPost" class="addPost">Add Post</button>
   </div>
